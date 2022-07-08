@@ -3,7 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -17,20 +16,17 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	
+	<!-- controller에서 String으로 반환되는 함수의 반환 값들에 
+	앞에는 prefix를 뒤에는 suffix를 붙여서 해당 화면으로 이동시켜줌 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- 어느 패키지에서 어노테이션을 읽어서 객체를 생성할 지 결정하는 설정  -->
-	<context:component-scan base-package="com.spring.controller" />
+	<!-- 자식 컨테이너에서는 controller만 생성 -->
+	<context:component-scan base-package="com.spring.boardweb.controller" />
 	
 	
-	<!-- bean으로 객체 생성할 때는 클래스를 추가할 때마다 bean을 추가해줘야된다. -->
-	<!-- 웹 어플리케이션에서 공통적으로 사용될 객체들은 bean 객체로 생성하고
-		 업무로직 객체들은 어노테이션을 이용한다. -->
-<!-- 	<beans:bean class="com.spring.controller.HomeController"></beans:bean>
-	<beans:bean class="com.spring.controller.UserController"></beans:bean>
-	<beans:bean class="com.spring.controller.FreeBoardController"></beans:bean> -->
 	
 </beans:beans>
