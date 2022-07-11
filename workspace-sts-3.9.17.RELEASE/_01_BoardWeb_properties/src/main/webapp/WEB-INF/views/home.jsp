@@ -21,7 +21,7 @@ ${hi }
 		<input type="text" placeholder="job" name="job">
 		<button type="submit">Submit</button>
 	</form>
-	<h1>${hello }</h1>
 	<a href="/hello.do">hello 페이지로</a>
+	<a href="getNameList.do">이름 목록 페이지로</a>
 </body>
 </html>

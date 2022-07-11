@@ -2,11 +2,13 @@ package com.spring.boardweb.controller;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,7 @@ public class HomeController {
 	//여러개일때 사용하는거
 	//@Qualifier는 의존성을 주입할 때 모양과 이름을 비교함
 	//같은 모양의 객체가 여러개 존재할 때 이름으로 비교하여 의존성 주입한다.
-	@Qualifier("homeServiceImpl")
+	@Autowired
 	HomeService homeService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -152,6 +154,20 @@ public class HomeController {
 		//model은 하나만 이동가능
 		
 		return "hello";
+	}
+	
+	@RequestMapping("getNameList.do")
+	public String getNameList(Model model) {
+		//목록이 오는거니까 List로
+		List<HomeVO> resultList = homeService.getNameList();
+		model.addAttribute("nameList", resultList); 
+		
+		for(int i = 0; i < resultList.size(); i++) {
+			System.out.println("firstName=========" + resultList.get(i).getFirstName());
+			System.out.println("lastName=========" + resultList.get(i).getLastName());
+		}
+			
+		return "getNameList";
 	}
 	
 }
