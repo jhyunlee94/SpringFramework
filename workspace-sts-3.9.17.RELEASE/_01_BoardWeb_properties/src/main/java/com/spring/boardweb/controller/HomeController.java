@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +36,12 @@ public class HomeController {
 	HomeService homeService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
 		
 		model.addAttribute("hi", "Hello Spring" );
+		
+		//1. Session Scope
+//		System.out.println("session data =======" + session.getAttribute("hello"));
 		
 		return "home";
 	}
@@ -136,5 +141,17 @@ public class HomeController {
 //		return "redirect:/";
 ////		return "home";
 //	}
+	
+	@RequestMapping("/hello.do")
+	public String hello(HttpSession session, Model model) {
+		//1. Session Scope 
+//		session.setAttribute("hello", "12345");
+		
+		//2. Request Scope
+		model.addAttribute("hello", "12345"); // hello에 12345 를 담아서 이동
+		//model은 하나만 이동가능
+		
+		return "hello";
+	}
 	
 }

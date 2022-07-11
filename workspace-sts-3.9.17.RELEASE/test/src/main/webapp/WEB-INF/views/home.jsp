@@ -9,6 +9,14 @@
 	Hello world!  
 </h1>
 
-<P>  The time on the server is ${hi}. </P>
+<a href="test.do?firstName=gi&lastName=go&age=36&job=teacher">click</a>
+
+<form action="test1.do" method="post">
+	<input type=text placeholder="firstName" name="firstName">
+	<input type=text placeholder="lastName" name="lastName">
+	<input type=text placeholder="age" name="age">
+	<input type=text placeholder="job" name="job">
+	<button type="submit">Submit</button>
+</form>
 </body>
 </html>
