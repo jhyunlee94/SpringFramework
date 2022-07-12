@@ -144,8 +144,9 @@ public class HomeController {
 ////		return "home";
 //	}
 	
-	@RequestMapping("/hello.do")
+	@RequestMapping("hello.do")
 	public String hello(HttpSession session, Model model) {
+		System.out.println("1111");
 		//1. Session Scope 
 //		session.setAttribute("hello", "12345");
 		
@@ -159,6 +160,7 @@ public class HomeController {
 	@RequestMapping("getNameList.do")
 	public String getNameList(Model model) {
 		//목록이 오는거니까 List로
+		//DB에서 이름 목록을 조회한 결과를 ResultList라는 변수에 담아줌
 		List<HomeVO> resultList = homeService.getNameList();
 		model.addAttribute("nameList", resultList); 
 		
@@ -167,16 +169,42 @@ public class HomeController {
 			System.out.println("lastName=========" + resultList.get(i).getLastName());
 		}
 			
+		//뷰 리졸브를 이용해서
 		return "getNameList";
 	}
 	
-	@RequestMapping("insertName.do")
+	@RequestMapping(value = "insertName.do", produces="application/text; charset=utf-8")
 	public String insertName(HomeVO homeVO) {
 		//데이터를 가지고 getNameList.do로 가야겠죠?
 		//그냥 넣게되면 뷰 리졸브랑 뒤에 .jsp 붙기때문에 redirect를 넣어줍니다.
 		//insert, update, delete 실행 시, 성공하면 1, 실패하면 0을 리턴
 		homeService.insertName(homeVO);
 		
+		return "redirect:getNameList.do";
+	}
+	
+	@RequestMapping(value ="getName.do", produces="application/text; charset=utf-8")
+	//Command 객체로 파라미터를 선언할 시
+	//HomeVO homeVO = new HomeVO; 자동으로 생성자 실행
+	//키값과 이름이 동일한 변수의 setter 메소드를 호출하여 해당 변수에 값을 담아줌
+	// 화면으로 바로 보내주기 위해 model 이용
+	public String getName(HomeVO homeVO, Model model) {
+		//homeVO.setFirstName("기천");
+		//homeVO.setLastName("고");
+		model.addAttribute("name", homeVO);
+		return "getName";
+	}
+	
+	//originalFirstName은 DTO에 추가하면 안좋기때문에 map으로 구현
+	@RequestMapping(value = "updateName.do", produces="application/text; charset=utf-8")
+	public String updateName(@RequestParam Map<String, String> paramMap) {
+		homeService.updateName(paramMap);
+		return "redirect:getNameList.do";
+	}
+	
+	@RequestMapping(value ="deleteName.do", produces="application/text; charset=utf-8")
+	public String deleteName(HomeVO homeVO) {
+		homeService.deleteName(homeVO);
 		return "redirect:getNameList.do";
 	}
 	

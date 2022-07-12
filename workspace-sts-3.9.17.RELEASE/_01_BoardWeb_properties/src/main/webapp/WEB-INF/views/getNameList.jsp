@@ -14,7 +14,8 @@
 		<a>이름3</a>
 		<!-- name으로 꺼내서 쓰겠다 -->
 		<c:forEach var="name" items="${nameList }">
-			<p>${name.firstName } ${name.lastName }</p>
+			<a href="getName.do?firstName=${name.firstName }&lastName=${name.lastName}">${name.firstName } ${name.lastName }</a>
+			<br/>
 		</c:forEach>
 	</div>
 	

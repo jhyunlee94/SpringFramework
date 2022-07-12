@@ -1,6 +1,7 @@
 package com.spring.boardweb.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,18 @@ public class HomeServiceImpl implements HomeService{
 		// TODO Auto-generated method stub
 		homeDAO.insertName(homeVO);
 		
+	}
+
+	@Override
+	public void updateName(Map<String, String> paramMap) {
+		// TODO Auto-generated method stub
+		homeDAO.updateName(paramMap);
+	}
+
+	@Override
+	public void deleteName(HomeVO homeVO) {
+		// TODO Auto-generated method stub
+		homeDAO.deleteName(homeVO);
 	}
 
 }

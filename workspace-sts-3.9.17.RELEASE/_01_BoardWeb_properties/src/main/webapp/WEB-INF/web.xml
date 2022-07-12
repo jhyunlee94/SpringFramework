@@ -55,6 +55,6 @@
 	<!-- filter 사용 매핑 -->
 	<filter-mapping>
 		<filter-name>characterEncoding</filter-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>

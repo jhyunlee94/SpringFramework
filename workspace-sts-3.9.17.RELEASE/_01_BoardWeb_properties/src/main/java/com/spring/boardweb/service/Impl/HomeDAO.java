@@ -1,6 +1,7 @@
 package com.spring.boardweb.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,16 @@ public class HomeDAO {
 	public void insertName(HomeVO homeVO) {
 		// TODO Auto-generated method stub
 		mybatis.insert("HomeDAO.insertName", homeVO);
+	}
+
+	public void updateName(Map<String, String> paramMap) {
+		// TODO Auto-generated method stub
+		mybatis.update("HomeDAO.updateName", paramMap);
+	}
+
+	public void deleteName(HomeVO homeVO) {
+		// TODO Auto-generated method stub
+		mybatis.delete("HomeDAO.deleteName", homeVO);
 	}
 
 }
