@@ -170,4 +170,14 @@ public class HomeController {
 		return "getNameList";
 	}
 	
+	@RequestMapping("insertName.do")
+	public String insertName(HomeVO homeVO) {
+		//데이터를 가지고 getNameList.do로 가야겠죠?
+		//그냥 넣게되면 뷰 리졸브랑 뒤에 .jsp 붙기때문에 redirect를 넣어줍니다.
+		//insert, update, delete 실행 시, 성공하면 1, 실패하면 0을 리턴
+		homeService.insertName(homeVO);
+		
+		return "redirect:getNameList.do";
+	}
+	
 }

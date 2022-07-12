@@ -25,4 +25,9 @@ public class HomeDAO {
 		return mybatis.selectList("HomeDAO.getNameList");
 	}
 
+	public void insertName(HomeVO homeVO) {
+		// TODO Auto-generated method stub
+		mybatis.insert("HomeDAO.insertName", homeVO);
+	}
+
 }

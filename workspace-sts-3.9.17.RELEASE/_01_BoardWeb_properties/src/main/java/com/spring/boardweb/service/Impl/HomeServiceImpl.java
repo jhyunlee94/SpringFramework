@@ -25,4 +25,11 @@ public class HomeServiceImpl implements HomeService{
 	//	<context:component-scan base-package="com.spring.boardweb.controller" /> - servlet-context.xml에 자식만 추가해줘야함
 	//왜냐 그래야지 service를 먼저 객체를 생성하고 그 다음 controller에서 사용을 하니 servlet-context.xml 즉 자식컨테이너에 추가
 
+	@Override
+	public void insertName(HomeVO homeVO) {
+		// TODO Auto-generated method stub
+		homeDAO.insertName(homeVO);
+		
+	}
+
 }

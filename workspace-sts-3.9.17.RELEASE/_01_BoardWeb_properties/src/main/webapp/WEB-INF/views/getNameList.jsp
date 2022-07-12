@@ -17,5 +17,11 @@
 			<p>${name.firstName } ${name.lastName }</p>
 		</c:forEach>
 	</div>
+	
+	<form id="insertNameForm" action="insertName.do" method="post">
+		<input type="text" name="firstName" placeholder="이름">
+		<input type="text" name="lastName" placeholder="성">
+		<button type="submit">등록</button>
+	</form>
 </body>
 </html>

@@ -16,7 +16,7 @@
 	<update id=""></update>
 	<delete id=""></delete>
 	 -->
-	<!-- com.spring.boardweb.HomeVO -> home (home-mapping) 별칭 -->
+	<!-- com.spring.boardweb.HomeVO -> home (home-mapping에 선언되어있음) 별칭 -->
 	<!-- <![CDATA[]]>  감싸줘서 부등호로 인식시켜줌-->
 	<!-- mapper에는 절대 ;(세미클론) 찍지 않는다. -->
 	<select id="getNameList" resultType="home"> <!-- parameterType="" 지정가능 -->
@@ -25,4 +25,17 @@
 				FROM T_NAME
 		]]>
 	</select>
+	
+	<!-- mybatis에서 파라미터를 꺼내는 방식 #{파라미터키} -->
+	<insert id="insertName" parameterType="home">
+		<![CDATA[
+			INSERT INTO T_NAME(
+				FIRST_NAME,
+				LAST_NAME
+			) VALUES (
+				#{firstName},
+				#{lastName}
+			)
+		]]>
+	</insert>
 </mapper>
