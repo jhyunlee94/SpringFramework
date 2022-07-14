@@ -155,6 +155,7 @@
 						$("#pwValidation").hide();
 					}
 					
+					//비동기처리 안넣으면 처리안됨
 					if($("#userPw").val() == $("#userPwCheck").val()) {
 						pwCheck = true;
 						$("#pwCheckResult").css("color", "green");
