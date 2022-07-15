@@ -25,6 +25,7 @@ public class BoardDAO {
 	public List<BoardVO> getBoardList(Map<String, String> paramMap, Criteria cri) {
 		Map<String, Object> pMap = new HashMap<String, Object>();
 		pMap.put("boardSearch", paramMap);
+		cri.setStartNum((cri.getPageNum() - 1) * cri.getAmount());
 		pMap.put("cri", cri);
 		return mybatis.selectList("BoardDAO.getBoardList", pMap);
 	}

@@ -20,13 +20,16 @@
 	}
 
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<jsp:include page="${pageContext.request.contextPath }/header.jsp"></jsp:include>
 	<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 		<h3>게시글 목록</h3>
 		
-		<form action="/board/getBoardList.do" method="post">
+		<form id="searchForm" action="/board/getBoardList.do" method="post">
+		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 			<table border="1" style="width: 700px; border-collapse: collapse;">
 				<tr>
 					<td align="right">
@@ -85,26 +88,41 @@
 		<br/>
 		<div style="text-align: center">
 			<ul class="pagination">
-				<li class="pagination_button">
-					<a href="#">Previous</a>
-				</li>
-				<li class="pagination_button">
-					<a href="#">1</a>
-				</li>
-				<li class="pagination_button">
-					<a href="#">2</a>
-				</li>
-				<li class="pagination_button">
-					<a href="#">3</a>
-				</li>
-				<li class="pagination_button">
-					<a href="#">Next</a>
-				</li>				
+				<c:if test="${pageMaker.prev }">
+					<li class="pagination_button">
+						<a href="${pageMaker.startPage -1 }">Previous</a>
+					</li>
+				</c:if>
+				
+				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+					<li class="pagination_button">
+						<a href="${num }">${num }</a>
+					</li>
+				</c:forEach>
+				
+				<c:if test="${pageMaker.next }">
+					<li class="pagination_button">
+						<a href="${pageMaker.endPage +1 }">Next</a>
+					</li>				
+				</c:if>
 			</ul>
 		</div>
 		<br/>
 		<a href="/board/insertBoard.do">새 글 등록</a>
 	</div>
 	<jsp:include page="${pageContext.request.contextPath }/footer.jsp"></jsp:include>
+	
+	<script>
+		$(function(){
+			const searchForm = $("#searchForm");
+			
+			$(".pagination a").on("click", function(e){
+				e.preventDefault(); // 이동되는걸 막아줌
+				
+				$("input[name='pageNum']").val($(this).attr("href"));
+				searchForm.submit();
+			});
+		});
+	</script>
 </body>
 </html>
