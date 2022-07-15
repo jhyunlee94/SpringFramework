@@ -1,0 +1,19 @@
+1. MyBatis의 동적쿼리
+  - 전달받은 파라미터의 조건에 따라 다른 쿼리를 실행할 수 있다.
+  - <if test="searchKeyword == 'a'">
+      SELECT * FROM T_BOARD
+    </if>
+    <if test="searchKeyword !== ''">
+      SELECT * FROM T_USER
+    </if>
+  - SELECT * FROM T_BOARD
+      WHERE 1=1 // 항상 참
+      <if test="searchKeyword == 'a'">
+          AND BOARD_TITLE LIKE '%a%'
+      </if>
+      <if test="searchKeyword !== ''">
+          AND BOARD_TITLE LIKE '%%'
+      </if>
+  - 동적 쿼리를 조건절(WHERE, AND 구문)에 붙일 때 주의사항
+    항상 참인 WHERE 1=1 로 WHERE 구문을 정의하고
+    동적 쿼리는 AND 구문으로 붙여준다.

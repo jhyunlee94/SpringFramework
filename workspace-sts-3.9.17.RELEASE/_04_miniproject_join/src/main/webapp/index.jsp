@@ -22,7 +22,7 @@
         <div class="top-bg">
             <div class="top-navbar">
                 <div class="nav justify-content-end">
-                    <a class="nav-link" href="/user/login.do">로그인</a>
+                    <a class="nav-link" href="/user/login2.do">로그인</a>
                     <a class="nav-link" href="/user/join.do">회원가입</a>
                 </div>
             </div>

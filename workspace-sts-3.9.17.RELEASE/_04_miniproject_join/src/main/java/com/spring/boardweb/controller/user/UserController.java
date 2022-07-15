@@ -76,4 +76,9 @@ public class UserController {
 		return json;
 	}
 	
+	@RequestMapping("/user/login2.do")
+	public String login2() {
+		return "user/login2";
+	}
+	
 }
