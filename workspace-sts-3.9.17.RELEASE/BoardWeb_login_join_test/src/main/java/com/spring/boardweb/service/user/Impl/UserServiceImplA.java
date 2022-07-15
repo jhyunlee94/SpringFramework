@@ -27,5 +27,19 @@ public class UserServiceImplA implements UserServiceA {
 	}
 
 
+	@Override
+	public int pwCheckA(UserVOA userVOA) {
+		// TODO Auto-generated method stub
+		return userDAOA.pwCheckA(userVOA);
+	}
+
+
+	@Override
+	public UserVOA loginA(UserVOA userVOA) {
+		// TODO Auto-generated method stub
+		return userDAOA.loginA(userVOA);
+	}
+
+
 
 }

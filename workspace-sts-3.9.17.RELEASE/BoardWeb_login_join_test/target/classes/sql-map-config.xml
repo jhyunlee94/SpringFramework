@@ -13,6 +13,7 @@
 	<typeAliases>
 		<typeAlias type="com.spring.boardweb.UserVO" alias="user"></typeAlias>
 		<typeAlias type="com.spring.boardweb.BoardVO" alias="board"></typeAlias>
+		<typeAlias type="com.spring.boardweb.UserVOA" alias="userA"></typeAlias>
 	</typeAliases>
 
 	<!-- 쿼리문 작성할 매퍼 설정 -->

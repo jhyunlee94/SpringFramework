@@ -8,5 +8,9 @@ public interface UserServiceA {
 
 	int idCheck1(String userId);
 
+	int pwCheckA(UserVOA userVOA);
+
+	UserVOA loginA(UserVOA userVOA);
+
 
 }

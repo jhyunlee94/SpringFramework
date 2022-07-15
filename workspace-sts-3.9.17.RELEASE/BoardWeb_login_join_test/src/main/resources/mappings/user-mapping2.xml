@@ -9,7 +9,7 @@
 <!-- 기존 JDBC 프로그래밍에서 DAO에 클래스에 쿼리를 작성함 -->
 <!-- DAO에서 쿼리가 분리되었기 때문에 DAO클래스 이름을 따라감 -->
 <mapper namespace="UserDAOA">
-	<insert id="join" parameterType="user">
+	<insert id="join" parameterType="userA">
 		<![CDATA[
 			INSERT INTO T_USER (
 				USER_ID,
@@ -29,9 +29,27 @@
 
 	<select id="idCheck1" parameterType="String" resultType="int">
 		<![CDATA[
-			SELECT COUNT(*) 
+			SELECT COUNT(*)
 				FROM T_USER
 				WHERE USER_ID = #{userId}
+		]]>
+	</select>
+	
+	<select id="pwCheckA" parameterType="userA" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+				FROM T_USER
+				WHERE USER_ID = #{userId}
+				  AND USER_PW = #{userPw}
+		]]>
+	</select>
+	
+	<select id="loginA" parameterType="userA" resultType="userA">
+		<![CDATA[
+			SELECT *
+				FROM T_USER
+				WHERE USER_ID = #{userId}
+				  AND USER_PW = #{userPw}
 		]]>
 	</select>
 </mapper>

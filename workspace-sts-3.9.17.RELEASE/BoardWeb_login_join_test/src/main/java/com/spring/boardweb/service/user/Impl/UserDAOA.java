@@ -25,5 +25,17 @@ public class UserDAOA {
 	}
 
 
+	public int pwCheckA(UserVOA userVOA) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("UserDAOA.pwCheckA", userVOA);
+	}
+
+
+	public UserVOA loginA(UserVOA userVOA) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("UserDAOA.loginA", userVOA);
+	}
+
+
 
 }

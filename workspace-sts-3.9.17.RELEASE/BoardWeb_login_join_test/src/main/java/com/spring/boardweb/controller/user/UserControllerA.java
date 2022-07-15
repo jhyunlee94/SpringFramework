@@ -3,6 +3,8 @@ package com.spring.boardweb.controller.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +38,7 @@ public class UserControllerA {
 //		}
 		userServiceA.join(userVOA);
 		
-		return "user/joinA";
+		return "user/loginA";
 	}
 	
 
@@ -56,6 +58,40 @@ public class UserControllerA {
 		System.out.println("jsonString==========" + json);
 		
 		return json;
+	}
+	
+	@RequestMapping(value = "/loginA.do", method=RequestMethod.GET)
+	public String loginView() {
+		return "user/loginA";
+	}
+	
+	@RequestMapping(value = "/loginA.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String loginA(HttpSession session, UserVOA userVOA) throws JsonProcessingException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		int idCheck = userServiceA.idCheck1(userVOA.getUserId());
+		
+		if( idCheck < 1) {
+			jsonMap.put("message", "idFail");
+		} else {
+			int pwCheck = userServiceA.pwCheckA(userVOA);
+			
+			if (pwCheck < 1) {
+				jsonMap.put("message", "pwFail");
+			} else {
+				UserVOA user = userServiceA.loginA(userVOA);
+				
+				session.setAttribute("loginUser", user);
+				jsonMap.put("message", "loginSuccess");
+			}
+		}
+		
+		String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonMap);
+		System.out.println("jsonStr================" + jsonStr);
+		return jsonStr;
 	}
 	
 }
