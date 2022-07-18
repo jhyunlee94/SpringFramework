@@ -8,12 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.boardweb.BoardFileVO;
@@ -82,8 +88,12 @@ public class BoardController {
 		boardService.updateBoardCnt(boardSeq);
 		
 		BoardVO board = boardService.getBoard(boardSeq);
+		
+		List<BoardFileVO> fileList = boardService.getBoardFile(boardSeq);
+		
 		//board라는 키값으로 
 		model.addAttribute("board", board);
+		model.addAttribute("fileList", fileList);
 		
 		return "/board/getBoard";
 	}
@@ -123,14 +133,54 @@ public class BoardController {
 	
 	@RequestMapping("/deleteBoard.do")
 	public String deleteBoard(@RequestParam int boardSeq) {
-		
+
 		boardService.deleteBoard(boardSeq);
 		
 		return "redirect:getBoardList.do";
 	}
 	
+	@RequestMapping("/fileDown.do")
+	@ResponseBody
+	public ResponseEntity<Resource> fileDown(@RequestParam String fileName, HttpServletRequest request) {
+		String path = request.getSession().getServletContext().getRealPath("/") + "/upload/";
+		
+		Resource resource = new FileSystemResource(path + fileName);
+		
+		String resourceName = resource.getFilename();
+		
+		HttpHeaders header = new HttpHeaders();
+		
+		try {
+			header.add("Content-Disposition", "attachment; filename=" + new String(resourceName.getBytes("UTF-8"),
+					"ISO-8859-1"));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+	
+	@RequestMapping("/deleteBoardFile.do")
+	@ResponseBody
+	public void deleteBoardFile(BoardFileVO boardFileVO) {
+		
+		boardService.deleteBoardFile(boardFileVO);
+	}
+	
+	
 	@RequestMapping("/updateBoard.do")
-	public String updateBoard(BoardVO boardVO) {
+	public String updateBoard(BoardVO boardVO, HttpServletRequest request,
+			MultipartHttpServletRequest multipartServletRequest) throws IOException{
+		
+		FileUtils fileUtils = new FileUtils();
+		
+		int boardSeq = boardVO.getBoardSeq();
+		
+		List<BoardFileVO> fileList = fileUtils.parseFileInfo(boardSeq, request, multipartServletRequest);
+		
+		if(!CollectionUtils.isEmpty(fileList)) {
+			boardService.insertBoardFile(fileList);
+		}
 		
 		boardService.updateBoard(boardVO);
 		

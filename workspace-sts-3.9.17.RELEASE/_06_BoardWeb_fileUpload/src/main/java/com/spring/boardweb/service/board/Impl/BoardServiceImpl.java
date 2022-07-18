@@ -74,6 +74,18 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.insertBoardFile(fileList);
 	}
 
+	@Override
+	public List<BoardFileVO> getBoardFile(int boardSeq) {
+		// TODO Auto-generated method stub
+		return boardDAO.getBoardFile(boardSeq);
+	}
+
+	@Override
+	public void deleteBoardFile(BoardFileVO boardFileVO) {
+		// TODO Auto-generated method stub
+		boardDAO.deleteBoardFile(boardFileVO);
+	}
+
 
 
 //	@Override

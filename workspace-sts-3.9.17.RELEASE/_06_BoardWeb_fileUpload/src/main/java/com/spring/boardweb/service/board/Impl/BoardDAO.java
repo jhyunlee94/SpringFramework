@@ -43,8 +43,16 @@ public class BoardDAO {
 	}
 
 	public void deleteBoard(int boardSeq) {
-		// TODO Auto-generated method stub
+		
+		BoardFileVO boardFileVO = new BoardFileVO();
+		boardFileVO.setBoardSeq(boardSeq);
+		
+		mybatis.delete("BoardDAO.deleteBoardFile", boardFileVO);
+		
 		mybatis.delete("BoardDAO.deleteBoard", boardSeq);
+		
+//		mybatis.update("BoardDAO.updateFileBoardSeq", boardSeq);
+		
 		mybatis.update("BoardDAO.updateBoardSeq", boardSeq);
 	}
 
@@ -74,6 +82,17 @@ public class BoardDAO {
 		//2. mybatis의 <forEach> 태그 사용
 		mybatis.insert("BoardDAO.insertBoardFile", fileList);
 		
+	}
+
+	public List<BoardFileVO> getBoardFile(int boardSeq) {
+		// TODO Auto-generated method stub
+		return mybatis.selectList("BoardDAO.getBoardFile", boardSeq);
+	}
+
+	public void deleteBoardFile(BoardFileVO boardFileVO) {
+		// TODO Auto-generated method stub
+		mybatis.delete("BoardDAO.deleteBoardFile", boardFileVO);
+		mybatis.update("BoardDAO.updateBoardFileSeq", boardFileVO);
 	}
 
 //	public List<BoardVO> getBoardListSearch(Map<String, String> paramMap) {

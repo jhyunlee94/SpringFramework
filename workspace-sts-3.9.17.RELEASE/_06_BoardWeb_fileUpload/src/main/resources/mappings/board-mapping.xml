@@ -221,4 +221,41 @@
 	      )
 	   </foreach>
    </insert>
+   
+   <select id="getBoardFile" parameterType="int" resultType="boardFile">
+   		<![CDATA[
+   			SELECT * 
+   				FROM T_BOARD_FILE
+   				WHERE BOARD_SEQ = #{boardSeq}
+   		]]>
+   </select>
+   
+   <delete id="deleteBoardFile" parameterType="boardFile">
+   		<![CDATA[
+   			DELETE FROM T_BOARD_FILE
+   				WHERE BOARD_SEQ = #{boardSeq}
+   		]]>		
+   		<if test="fileSeq != null and fileSeq != 0">
+   			    AND FILE_SEQ= #{fileSeq}
+   		</if>
+   			
+
+   </delete>
+   
+  <update id="updateBoardFileSeq" parameterType="boardFile">
+   		<![CDATA[
+   			UPDATE T_BOARD_FILE
+   				SET FILE_SEQ = FILE_SEQ - 1
+   				WHERE BOARD_SEQ = #{boardSeq}
+   				  AND FILE_SEQ > #{fileSeq}
+   		]]>
+   </update> 
+   
+   <update id="updateFileBoardSeq" parameterType="int">
+   		<![CDATA[
+   			UPDATE T_BOARD_FILE
+   				SET BOARD_SEQ = BOARD_SEQ - 1
+   				WHERE BOARD_SEQ > #{boardSeq}
+   		]]>
+   </update> 
 </mapper>
