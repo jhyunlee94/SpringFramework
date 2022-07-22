@@ -22,7 +22,7 @@
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mysql://localhost:3306/studydb?serverTimezone=UTC"></property>
 		<property name="username" value="study"></property>
-		<property name="password" value="admin"></property>
+		<property name="password" value="!dkdlxl"></property>
 	</bean>
 	
 	<!-- DB 연결 세션관리 객체 생성 -->

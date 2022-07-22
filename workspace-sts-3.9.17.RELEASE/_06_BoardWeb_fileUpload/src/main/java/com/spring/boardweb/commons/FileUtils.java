@@ -14,35 +14,29 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.boardweb.BoardFileVO;
 
-//ì‹¤ì œ ì„œë²„ì— íŒŒì¼ ì—…ë¡œë“œ ì²˜ë¦¬ë¥¼ í•´ì£¼ëŠ” í´ë˜ìŠ¤
+//½ÇÁ¦ ¼­¹ö¿¡ ÆÄÀÏ ¾÷·Îµå Ã³¸®¸¦ ÇØÁÖ´Â Å¬·¡½º
 public class FileUtils {
-	//ëª©ë¡ ë¦¬ìŠ¤íŠ¸ë¥¼ ë¦¬í„´í•´ì£¼ëŠ”ê±¸ ë§Œë“¤ì–´ì£¼ê² ë‹¤
 	public List<BoardFileVO> parseFileInfo(int boardSeq, HttpServletRequest request,
 			MultipartHttpServletRequest multipartServletRequest) throws IOException {
 		List<BoardFileVO> fileList = new ArrayList<BoardFileVO>();
 		
-		//ì„œë²„ì˜ ë£¨íŠ¸ ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°
+		//¼­¹öÀÇ ·çÆ® °æ·Î °¡Á®¿À±â
 		String rootPath = request.getSession().getServletContext().getRealPath("/");
 		
-		//ì•„ë˜ê°€ í•´ë‹¹ ê²½ë¡œì„
-		///Users/jhyunlee/Desktop/SpringFramework/SpringFramework/workspace-sts-3.9.17.RELEASE/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/_06_BoardWeb_fileUpload/upload
 		String attachPath = "/upload/";
-		
 		
 		File directory = new File(rootPath + attachPath);
 		
 		if(directory.exists() == false) {
-			//ì„œë²„ ë£¨íŠ¸ ê²½ë¡œì— upload í´ë” ë§Œë“¤ê¸°
+			//¼­¹ö ·çÆ® °æ·Î¿¡ upload Æú´õ ¸¸µé±â
 			directory.mkdir();
 		}
 		
-		//ì²¨ë¶€íŒŒì¼ ëª©ë¡ êº¼ë‚´ì˜¤ê¸°
+		//Ã·ºÎÆÄÀÏ ¸ñ·Ï ²¨³»¿À±â
 		Iterator<String> iterator = multipartServletRequest.getFileNames();
 		
-		//iteratorì— hasNext ë’¤ì— ê°’ì´ ìˆìœ¼ë©´ ê³„ì† whileì„ ëŒë ¤ì£¼ê² ìŠµë‹ˆë‹¤.
 		while(iterator.hasNext()) {
-			//ì²¨ë¶€íŒŒì¼ êº¼ë‚´ì˜¤ê¸°
-			//iteratorì— ë‹´ê²¨ìˆëŠ” íŒŒì¼ì´ë¦„ë“¤ë¡œ ì²¨ë¶€íŒŒì¼ êº¼ë‚´ì˜¤ê¸°
+			//iterator¿¡ ´ã°ÜÀÖ´Â ÆÄÀÏÀÌ¸§µé·Î Ã·ºÎÆÄÀÏ ²¨³»¿À±â
 			List<MultipartFile> list = multipartServletRequest.getFiles(iterator.next());
 			
 			for(MultipartFile multipartFile : list) {
@@ -50,20 +44,19 @@ public class FileUtils {
 					BoardFileVO boardFileVO = new BoardFileVO();
 					
 					boardFileVO.setBoardSeq(boardSeq);
-					//í™”ë©´ì— í‘œì¶œí•  ë•Œ ì‚¬ìš©
+					//È­¸é¿¡ Ç¥ÃâÇÒ ¶§ »ç¿ë
 					boardFileVO.setOriginalFileName(multipartFile.getOriginalFilename());
 					
-					//ê³ ìœ í•œ íŒŒì¼ëª… ìƒì„±
-					//ì‹¤ì œ ì„œë²„ì— ì €ì¥ë˜ëŠ” íŒŒì¼ëª…
+					//°íÀ¯ÇÑ ÆÄÀÏ¸í »ı¼º
+					//½ÇÁ¦ ¼­¹ö¿¡ ÀúÀåµÇ´Â ÆÄÀÏ¸í
 					String uuid = UUID.randomUUID().toString();
 					boardFileVO.setFileName(uuid + multipartFile.getOriginalFilename());
 					
 					boardFileVO.setFilePath(rootPath + attachPath);
 					
-					
 					fileList.add(boardFileVO);
 					
-					//íŒŒì¼ ì—…ë¡œë“œ ì²˜ë¦¬
+					//ÆÄÀÏ ¾÷·Îµå Ã³¸®
 					File file = new File(rootPath + attachPath + uuid + multipartFile.getOriginalFilename());
 					
 					multipartFile.transferTo(file);
